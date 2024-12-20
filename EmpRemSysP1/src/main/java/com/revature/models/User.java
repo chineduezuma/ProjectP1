@@ -3,6 +3,8 @@ package com.revature.models;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component // 1 of the 4 stereotype annotations (makes the class a Bean)
 @Entity // This annotation makes a DB table based on this Class
 @Table(name = "users") //This annotation lets us specify properties (like table name)
@@ -28,6 +30,19 @@ public class User {
 
     @Column(nullable = false)
     private String role = "employee";  // Every new user will be an employee by default
+
+    /* connection to reimbursement FK
+     *
+     *  mappedBy - Indicates the FK field in the Reimbursement class
+     *
+     * cascade - defines how changes to a User records will affect dependent Reimbursement records
+        * CascadeType.ALL = any change to User record will affect dependent records
+     *
+     * */
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    private List<Reimbursement> reimbursements;
+
 
     // Boilerplate code----------------------------------no args, all args, getter/setter, toString
 
@@ -89,6 +104,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Reimbursement> getReimbursements() {
+        return reimbursements;
+    }
+
+    public void setReimbursements(List<Reimbursement> reimbursements) {
+        this.reimbursements = reimbursements;
     }
 
     @Override

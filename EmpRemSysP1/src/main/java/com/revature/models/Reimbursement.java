@@ -18,8 +18,19 @@ public class Reimbursement {
     @Column(nullable = false)
     private double amount;
 
-    @Column(nullable = false) // This column Must have a value on insert
+    @Column(nullable = false)
     private String status = "pending";
+
+    /* FK to User (every reimbursement belongs to a user - many reimbursements belong to one user)
+    *
+    *  fetch - defines when the Dependency is loaded
+        * LAZY = loads dependency only when it's called
+        * EAGER = loads dependency at runtime (preferred)
+     * @JoinColumn - defines the column that will be used to link these tables in the DB
+        * We have to provide the name of the PK in User */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId") // This links our FK to the PK in User (userId)
+    private User user;
 
     // Boilerplate code----------------------------------no args, all args, getter/setter, toString
 
@@ -27,11 +38,12 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(int reimbId, String description, double amount, String status) {
+    public Reimbursement(int reimbId, String description, double amount, String status, User user) {
         this.reimbId = reimbId;
         this.description = description;
         this.amount = amount;
         this.status = status;
+        this.user = user;
     }
 
     public int getReimbId() {
@@ -66,6 +78,14 @@ public class Reimbursement {
         this.status = status;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Reimbursement{" +
@@ -73,6 +93,7 @@ public class Reimbursement {
                 ", description='" + description + '\'' +
                 ", amount=" + amount +
                 ", status='" + status + '\'' +
+                ", user=" + user +
                 '}';
     }
 }
