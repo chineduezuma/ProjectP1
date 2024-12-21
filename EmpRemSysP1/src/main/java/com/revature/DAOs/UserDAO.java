@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 //JpaRepository takes two generics:
     //-The type of the Entity we're working with
     //-The type of the primary key of that Entity
-@Repository //1 of the 4 stereotype annotation (makes a class a bean)
+
+@Repository //1 of the 4 stereotype annotations (makes a class a bean)
 public interface UserDAO extends JpaRepository<User, Integer> {
+
+
 }

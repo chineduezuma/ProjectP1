@@ -21,13 +21,14 @@ public class Reimbursement {
     @Column(nullable = false)
     private String status = "pending";
 
+
     /* FK to User (every reimbursement belongs to a user - many reimbursements belong to one user)
-    *
-    *  fetch - defines when the Dependency is loaded
-        * LAZY = loads dependency only when it's called
-        * EAGER = loads dependency at runtime (preferred)
+     *
+     *  fetch - defines when the Dependency is loaded
+     * LAZY = loads dependency only when it's called
+     * EAGER = loads dependency at runtime (preferred)
      * @JoinColumn - defines the column that will be used to link these tables in the DB
-        * We have to provide the name of the PK in User */
+     * We have to provide the name of the PK in User */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // This links our FK to the PK in User (userId)
     private User user;
@@ -96,4 +97,5 @@ public class Reimbursement {
                 ", user=" + user +
                 '}';
     }
+
 }

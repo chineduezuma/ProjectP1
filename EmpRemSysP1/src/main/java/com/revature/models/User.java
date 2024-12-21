@@ -36,10 +36,10 @@ public class User {
      *  mappedBy - Indicates the FK field in the Reimbursement class
      *
      * cascade - defines how changes to a User records will affect dependent Reimbursement records
-        * CascadeType.ALL = any change to User record will affect dependent records
+     * CascadeType.ALL = any change to User record will affect dependent records
      *
      * */
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 
     private List<Reimbursement> reimbursements;
 
@@ -125,4 +125,5 @@ public class User {
                 ", role='" + role + '\'' +
                 '}';
     }
+
 }

@@ -8,6 +8,9 @@ import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service // 1 of the 4 stereotype annotations (makes a class a bean)
 public class UserService {
 
@@ -20,7 +23,9 @@ public class UserService {
     }
 
     // This method inserts new User into the DB once they have been validated
-    public User insertUser(User user) {
+
+
+    public User insertUser(User user){
 
         // Make sure the values are valid
 
@@ -43,5 +48,32 @@ public class UserService {
         // if none of these gets triggered, the User is valid and can be sent to the DAO
 
         return userDAO.save(user);
+
     }
+
+    // This method gets all users from the DB
+    public List<User> getAllUsers() {
+
+
+        return userDAO.findAll();
+    }
+
+    public void deleteUser(Integer userId) {
+        Optional<User> user = userDAO.findById(userId);
+        if(user.isPresent()) {
+            User deleteUser = user.get();
+            userDAO.delete(deleteUser);
+        }
+    }
+
+    public User upgradeUser(Integer userId) {
+        Optional<User> user = userDAO.findById(userId);
+        if(user.isPresent()) {
+            User userNewRole = user.get();
+            userNewRole.setRole("manager");
+            return userDAO.save(userNewRole);
+        }
+        return null;
+    }
+
 }
