@@ -58,6 +58,11 @@ public class UserService {
         return userDAO.findAll();
     }
 
+    public User getUser(Integer userId) {
+        Optional<User> user = userDAO.findById(userId);
+        return user.orElse(null);
+    }
+
     public void deleteUser(Integer userId) {
         Optional<User> user = userDAO.findById(userId);
         if(user.isPresent()) {
@@ -66,12 +71,15 @@ public class UserService {
         }
     }
 
-    public User upgradeUser(Integer userId) {
+    public User upgradeUser(Integer userId, User upgradedUser) {
         Optional<User> user = userDAO.findById(userId);
         if(user.isPresent()) {
             User userNewRole = user.get();
-            userNewRole.setRole("manager");
-            return userDAO.save(userNewRole);
+
+            if(upgradedUser.getUserId() == userNewRole.getUserId()) {
+                userNewRole.setRole("manager");
+                return userDAO.save(userNewRole);
+            }
         }
         return null;
     }

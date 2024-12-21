@@ -43,8 +43,25 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Integer> deleteUser(@PathVariable Integer userId){
+
+        if(userService.getUser(userId) != null){
+            userService.deleteUser(userId);
+            return ResponseEntity.status(200).body(1);
+        }
+        return ResponseEntity.status(200).body(null);
+    }
 
 
+@PatchMapping("/{userId}")
+public ResponseEntity<Integer> upgradeUser(@PathVariable Integer userId, @RequestBody User upgradeduser){
+    User user = userService.upgradeUser(userId, upgradeduser);
+    if(user == null){
+        return ResponseEntity.status(400).body(0);
+    }
+    return ResponseEntity.status(200).body(1);
+}
 
 
     //Exception Handlers--------------------------------
