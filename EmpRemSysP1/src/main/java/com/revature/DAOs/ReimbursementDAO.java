@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 //JpaRepository takes two generics:
     //-The type of the Entity we're working with
@@ -19,7 +20,7 @@ public interface ReimbursementDAO extends JpaRepository<Reimbursement, Integer> 
     List<Reimbursement> findByStatus(String status);
 
     //This property expression method will A MANAGER APPROVE OR DENY A REIMBURSEMENT BY REIMID
-//    Reimbursement findByReimbursementId(String status);
+    Optional<Reimbursement> findByReimbId(Integer reimId);
 
     //This property expression method will find a LIST OF REIMBURSEMENT FOR USER BY USERID
     List<Reimbursement> findByUser_UserId(Integer userId);

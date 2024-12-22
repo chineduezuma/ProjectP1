@@ -4,6 +4,7 @@ package com.revature.services;
 // User input validation, Data manipulation/reformatting, User authentication, etc.
 
 import com.revature.DAOs.UserDAO;
+import com.revature.aspects.AdminOnly;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,15 +82,7 @@ public class UserService {
 
 
 
-
-    public User getUser(Integer userId) {
-        Optional<User> user = userDAO.findById(userId);
-        return user.orElse(null);
-    }
-
-
-
-
+    // MANAGER PROMOTES A USER TO MANAGER
     public User upgradeUser(Integer userId, User upgradedUser) {
         Optional<User> user = userDAO.findById(userId);
         if(user.isPresent()) {
@@ -102,5 +95,16 @@ public class UserService {
         }
         return null;
     }
+
+
+
+
+
+    public User getUser(Integer userId) {
+        Optional<User> user = userDAO.findById(userId);
+        return user.orElse(null);
+    }
+
+
 
 }

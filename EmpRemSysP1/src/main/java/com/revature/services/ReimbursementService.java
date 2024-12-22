@@ -62,21 +62,25 @@ public class ReimbursementService {
 
 
 
-//    //MANAGER APPROVES OR DENIES A REIMBURSEMENT BY REIMID
-//    public Reimbursement resolveReimbursement(Integer reimId, Reimbursement resolvedreimbursement) {
-//
-//        Optional<Reimbursement> reimbursement = reimbursementDAO.findByReimId(reimId)
-//
-//            Reimbursement newReimbursementStatus = reimbursement.get();
-//
-//            if(resolvedreimbursement.getReimbId() == newReimbursementStatus.getReimbId()) {
-//
-//                newReimbursementStatus.setStatus(resolvedreimbursement.getStatus());
-//
-//                return reimbursementDAO.save(newReimbursementStatus);
-//            }
-//            return null;
-//    }
+    //MANAGER APPROVES OR DENIES A REIMBURSEMENT BY REIMID
+    public Reimbursement resolveReimbursement(Integer reimId, Reimbursement resolvedreimbursement) {
+
+        Optional<Reimbursement> reimbursement = reimbursementDAO.findByReimbId(reimId);
+
+
+            if(reimbursement.isPresent()) {
+
+                Reimbursement newReimbursementStatus = reimbursement.get();
+
+                if (resolvedreimbursement.getReimbId() == newReimbursementStatus.getReimbId()) {
+
+                    newReimbursementStatus.setStatus(resolvedreimbursement.getStatus());
+
+                    return reimbursementDAO.save(newReimbursementStatus);
+                }
+            }
+            return null;
+    }
 
 
 

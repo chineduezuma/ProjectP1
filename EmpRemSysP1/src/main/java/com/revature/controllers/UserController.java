@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 
+import com.revature.aspects.AdminOnly;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserController {
 
     // Insert a new User (any POST request ending in /users will invoke this method) - CREATE AN ACCOUNT
     @PostMapping
-    public ResponseEntity<User> insertTeam(@RequestBody User user) {
+    public ResponseEntity<User> insertUser(@RequestBody User user) {
 
         // Send user to the service which will send it to the DAO
         User newUser = userService.insertUser(user);

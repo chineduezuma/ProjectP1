@@ -44,18 +44,18 @@ public class ReimbursementController {
     }
 
 
-//    //MANAGER APPROVES OR DENIES A REIMBURSEMENT BY REIMID
-//    @PatchMapping("/{reimId}")
-//    public ResponseEntity<Reimbursement> resolveReimbursement(@PathVariable Integer reimId, @RequestBody Reimbursement resolvedreimbursement){
-//
-//        Reimbursement reimbursement = reimbursementService.resolveReimbursement(reimId, resolvedreimbursement);
-//
-//        if(reimbursement == null){
-//
-//            return ResponseEntity.status(400).body(null);
-//        }
-//        return ResponseEntity.status(200).body(reimbursement);
-//    }
+    //MANAGER APPROVES OR DENIES A REIMBURSEMENT BY REIMID
+    @PatchMapping("/{reimId}")
+    public ResponseEntity<Reimbursement> resolveReimbursement(@PathVariable Integer reimId, @RequestBody Reimbursement resolvedreimbursement){
+
+        Reimbursement reimbursement = reimbursementService.resolveReimbursement(reimId, resolvedreimbursement);
+
+        if(reimbursement == null){
+
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.status(200).body(reimbursement);
+    }
 
 
 
