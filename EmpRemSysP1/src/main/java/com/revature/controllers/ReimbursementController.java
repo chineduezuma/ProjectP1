@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.models.DTOs.ReimbursementDTO;
 import com.revature.models.Reimbursement;
 import com.revature.services.ReimbursementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,51 +23,92 @@ public class ReimbursementController {
         this.reimbursementService = reimbursementService;
     }
 
+
+    //MANAGER GET ALL REIMBURSEMENT
     @GetMapping
     public ResponseEntity<List<Reimbursement>> getAllReimbursement(){
 
-        // This time, I will just do it in one line
         return ResponseEntity.ok(reimbursementService.getAllReimbursements());
+
     }
 
-    @GetMapping("/{status}/reimbursements")
+
+
+
+    //MANAGER GET ALL REIMBURSEMENT BY STATUS (PENDING)
+    @GetMapping("/{status}")
     public ResponseEntity<List<Reimbursement>> getAllStatusReimbursements(@PathVariable String status){
 
-        // This time, I will just do it in one line
         return ResponseEntity.ok(reimbursementService.getAllStatusReimbursements(status));
-    }
 
-    @PatchMapping("/{reimId}")
-    public ResponseEntity<Reimbursement> resolveReimbursement(@PathVariable Integer reimId, @RequestBody Reimbursement resolvedreimbursement){
-        Reimbursement reimbursement = reimbursementService.resolveReimbursement(reimId, resolvedreimbursement);
-        if(reimbursement == null){
-            return ResponseEntity.status(400).body(null);
-        }
-        return ResponseEntity.status(200).body(reimbursement);
     }
 
 
+//    //MANAGER APPROVES OR DENIES A REIMBURSEMENT BY REIMID
+//    @PatchMapping("/{reimId}")
+//    public ResponseEntity<Reimbursement> resolveReimbursement(@PathVariable Integer reimId, @RequestBody Reimbursement resolvedreimbursement){
+//
+//        Reimbursement reimbursement = reimbursementService.resolveReimbursement(reimId, resolvedreimbursement);
+//
+//        if(reimbursement == null){
+//
+//            return ResponseEntity.status(400).body(null);
+//        }
+//        return ResponseEntity.status(200).body(reimbursement);
+//    }
+
+
+
+
+
+
+
+
+
+    //USER / EMPLOYEE INSERT / CREATE REIMBURSEMENT
+    @PostMapping
+    public ResponseEntity<Reimbursement> insertReimbursement(@RequestBody ReimbursementDTO reimbursementDTO){
+
+        return ResponseEntity.ok(reimbursementService.insertReimbursement(reimbursementDTO));
+
+    }
+
+
+
+
+    //USER / EMPLOYEE GET ALL REIMBURSEMENT BY USERID
     @GetMapping("/{userId}/reimbursements")
     public ResponseEntity<List<Reimbursement>> getUserIdReimbursements(@PathVariable Integer userId){
 
-        // This time, I will just do it in one line
         return ResponseEntity.ok(reimbursementService.getUserIdReimbursements(userId));
+
     }
 
+
+
+
+    //USER / EMPLOYEE SELECT ALL PENDING REIMBURSEMENT BY USERID AND STATUS
     @GetMapping("/{userId}/{status}/reimbursements")
     public ResponseEntity<List<Reimbursement>> getUserIdPendingReimbursements(@PathVariable Integer userId, @PathVariable String status){
 
-        // This time, I will just do it in one line
         return ResponseEntity.ok(reimbursementService.getUserIdPendingReimbursements(userId, status));
+
     }
 
 
+
+
+    //USER / EMPLOYEE EDIT DESCRIPTION OF PENDING REIMBURSEMENT BY REIMID
     @PatchMapping("/reim/{reimId}")
     public ResponseEntity<Reimbursement> editDescriptionByReimbursementId(@PathVariable Integer reimId, @RequestBody Reimbursement resolvedreimbursement){
-        Reimbursement reimbursement = reimbursementService.resolveReimbursement(reimId, resolvedreimbursement);
+
+        Reimbursement reimbursement = reimbursementService.editDescriptionByReimbursementId(reimId, resolvedreimbursement);
+
         if(reimbursement == null){
+
             return ResponseEntity.status(400).body(null);
         }
+
         return ResponseEntity.status(200).body(reimbursement);
     }
 

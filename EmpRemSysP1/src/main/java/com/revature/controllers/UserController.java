@@ -23,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Insert a new User (any POST request ending in /users will invoke this method)
+    // Insert a new User (any POST request ending in /users will invoke this method) - CREATE AN ACCOUNT
     @PostMapping
     public ResponseEntity<User> insertTeam(@RequestBody User user) {
 
@@ -38,28 +38,44 @@ public class UserController {
         //we send the user object back in the response body
     }
 
+
+
+
+    // MANAGER SELECTS  ALL USERS
     @GetMapping
     public ResponseEntity<List<User>> getAllUser(){
 
-        // This time, I will just do it in one line
         return ResponseEntity.ok(userService.getAllUsers());
+
     }
 
+
+
+    // MANAGER DELETES A USER
     @DeleteMapping("/{userId}")
     public ResponseEntity<Integer> deleteUser(@PathVariable Integer userId){
 
         if(userService.getUser(userId) != null){
+
             userService.deleteUser(userId);
+
             return ResponseEntity.status(200).body(1);
         }
+
         return ResponseEntity.status(200).body(null);
     }
 
 
+
+
+    // MANAGER PROMOTES A USER TO MANAGER
     @PatchMapping("/{userId}")
     public ResponseEntity<User> upgradeUser(@PathVariable Integer userId, @RequestBody User upgradeduser){
+
         User user = userService.upgradeUser(userId, upgradeduser);
+
         if(user == null){
+
             return ResponseEntity.status(400).body(null);
         }
         return ResponseEntity.status(200).body(user);

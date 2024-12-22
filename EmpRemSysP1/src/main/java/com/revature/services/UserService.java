@@ -22,9 +22,9 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    // This method inserts new User into the DB once they have been validated
 
 
+    // This method inserts new User into the DB once they have been validated - CREATE AN ACCOUNT
     public User insertUser(User user){
 
         // Make sure the values are valid
@@ -51,25 +51,44 @@ public class UserService {
 
     }
 
-    // This method gets all users from the DB
+
+
+
+    // MANAGER SELECTS  ALL USERS
     public List<User> getAllUsers() {
 
-
         return userDAO.findAll();
+
     }
+
+
+
+
+    // MANAGER DELETES A USER
+    public void deleteUser(Integer userId) {
+
+        Optional<User> user = userDAO.findById(userId);
+
+        if(user.isPresent()) {
+
+            User deleteUser = user.get();
+
+            userDAO.delete(deleteUser);
+
+        }
+    }
+
+
+
+
 
     public User getUser(Integer userId) {
         Optional<User> user = userDAO.findById(userId);
         return user.orElse(null);
     }
 
-    public void deleteUser(Integer userId) {
-        Optional<User> user = userDAO.findById(userId);
-        if(user.isPresent()) {
-            User deleteUser = user.get();
-            userDAO.delete(deleteUser);
-        }
-    }
+
+
 
     public User upgradeUser(Integer userId, User upgradedUser) {
         Optional<User> user = userDAO.findById(userId);
