@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+
 import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController // Combines @Controller and @ResponseBody
 @RequestMapping("/users") // All HttP requests ending in /users will be sent
+@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true") //Allows requests from any origin (including our frontend)
 public class UserController {
 
     // We're going to use constructor injection to dependency inject the Service
@@ -54,14 +56,14 @@ public class UserController {
     }
 
 
-@PatchMapping("/{userId}")
-public ResponseEntity<Integer> upgradeUser(@PathVariable Integer userId, @RequestBody User upgradeduser){
-    User user = userService.upgradeUser(userId, upgradeduser);
-    if(user == null){
-        return ResponseEntity.status(400).body(0);
+    @PatchMapping("/{userId}")
+    public ResponseEntity<User> upgradeUser(@PathVariable Integer userId, @RequestBody User upgradeduser){
+        User user = userService.upgradeUser(userId, upgradeduser);
+        if(user == null){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.status(200).body(user);
     }
-    return ResponseEntity.status(200).body(1);
-}
 
 
     //Exception Handlers--------------------------------
