@@ -114,4 +114,21 @@ public class ReimbursementController {
 
 
 
+
+    //USER / EMPLOYEE EDIT DESCRIPTION OF PENDING REIMBURSEMENT BY REIMID
+    @GetMapping("/reim/{reimId}")
+    public ResponseEntity<Reimbursement> getByReimbursementId(@PathVariable Integer reimId){
+
+        Reimbursement reimbursement = reimbursementService.getReimb(reimId);
+
+        if(reimbursement == null){
+
+            return ResponseEntity.status(400).body(null);
+        }
+
+        return ResponseEntity.status(200).body(reimbursement);
+    }
+
+
+
 }

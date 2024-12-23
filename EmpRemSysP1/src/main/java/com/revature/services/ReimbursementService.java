@@ -169,4 +169,13 @@ public class ReimbursementService {
 
 
 
+
+    //USER / EMPLOYEE RETRIEVES DESCRIPTION OF PENDING REIMBURSEMENT BY REIMID
+    public Reimbursement getReimb(Integer reimId) {
+        Optional<Reimbursement> reimb = reimbursementDAO.findByReimbId(reimId);
+        return reimb.orElse(null);
+    }
+
+
+
 }
